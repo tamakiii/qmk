@@ -1,7 +1,7 @@
 
 setup:
-	git submodule update --init --depth --recursive
-	cd vendor/qmk/qmk_firmware &&  make git-submodule
+	git submodule update --init --recursive
+	# cd vendor/qmk/qmk_firmware && make git-submodule
 
 deploy:
 	curl -X POST https://content.dropboxapi.com/2/files/upload \
