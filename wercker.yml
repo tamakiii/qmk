@@ -6,7 +6,7 @@ build:
     - script:
       cwd: $WERCKER_SOURCE_DIR
       name: setup
-      code: make setup
+      code: pwd && ls -lsa && make setup
 
     - script:
       name: build keymap
