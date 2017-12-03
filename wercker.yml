@@ -4,6 +4,7 @@ box:
 build:
   steps:
     - script:
+      cwd: $WERCKER_SOURCE_DIR
       name: setup
       code: make setup
 
