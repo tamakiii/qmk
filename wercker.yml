@@ -1,5 +1,5 @@
 box:
-  id: tamakiii/qmk_firmware:latest
+  id: tamakiii/qmk:latest
 
 build:
   steps:
