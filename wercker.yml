@@ -4,7 +4,7 @@ box:
 build:
   steps:
     - add-ssh-key:
-      keyname: $GITHUB_SSH_KEY_NAME
+      keyname: GITHUB_SSH_KEY_NAME
       host: github.com
 
     - add-to-known_hosts:
