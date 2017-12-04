@@ -3,8 +3,15 @@ box:
 
 build:
   steps:
+    - add-ssh-key:
+      keyname: $GITHUB_SSH_KEY_NAME
+      host: github.com
+
+    - add-to-known_hosts:
+      hostname: github.com
+      fingerprint: 16:27:ac:a5:76:28:2d:36n:63:1b:56:4d:eb:df:a6:48
+
     - script:
-      cwd: $WERCKER_SOURCE_DIR
       name: setup
       code: make setup
 
@@ -27,4 +34,3 @@ deploy:
       cwd: $WERCKER_OUTPUT_DIR
       code:
         which curl && echo $DROPBOX_DIR && pwd && ls -lsa && for FILE in .; do echo ${FILE}; done
-

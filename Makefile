@@ -1,7 +1,6 @@
 
 setup:
-	git clone --recursive git@github.com:qmk/qmk_firmware.git vendor/qmk/qmk_firmware
-	# cd vendor/qmk/qmk_firmware && make git-submodule
+	git submodule update --init --recursive
 
 deploy:
 	curl -X POST https://content.dropboxapi.com/2/files/upload \
@@ -9,4 +8,3 @@ deploy:
 	  --header "Dropbox-API-Arg: {\"path\": \"${PATH}\",\"mode\": \"add\",\"autorename\": true,\"mute\": false}" \
 	  --header "Content-Type: application/octet-stream" \
 	  --data-binary @${DATA_BINARY}
-
