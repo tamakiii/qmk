@@ -1,4 +1,3 @@
 
 setup:
-	git submodule update --init --depth --recursive
-
+	# git submodule update --init --depth --recursive
