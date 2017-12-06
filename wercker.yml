@@ -1,0 +1,47 @@
+box:
+  id: tamakiii/qmk:latest
+
+build:
+  steps:
+    - add-ssh-key:
+      keyname: GITHUB_SSH_KEY
+      host: github.com
+
+    - add-to-known_hosts:
+      hostname: github.com
+      fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+
+    - add-to-known_hosts:
+      hostname: github.com
+      fingerprint: SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8
+
+    - script:
+      name: setup
+      code: make setup
+
+    - script:
+      name: build keymap
+      cwd: $WERCKER_ROOT/vendor/qmk/qmk_firmware
+      code: |
+        make keyboard=$KEYBOARD subproject=$SUBPROJECT keymap=$KEYMAP
+
+    - script:
+      name: move built firmware to output dir.
+      cwd: $WERCKER_ROOT/vendor/qmk/qmk_firmware/.build
+      code: |
+        cp *.hex $WERCKER_OUTPUT_DIR/
+
+deploy:
+  steps:
+    - install-packages:
+      packages: curl
+
+    - script:
+      name: upload hex file
+      cwd: $WERCKER_SOURCE_DIR
+      code: |
+        ls * | xargs -I __FILE__ curl -X POST https://content.dropboxapi.com/2/files/upload \
+          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
+          --header "Dropbox-API-Arg: {\"path\": \"${DROPBOX_DIR}/__FILE__\",\"mode\": \"add\",\"autorename\": false,\"mute\": false}" \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @__FILE__

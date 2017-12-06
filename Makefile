@@ -1,3 +1,4 @@
 
 setup:
-	# git submodule update --init --depth --recursive
+	git clone --recursive git@github.com:qmk/qmk_firmware.git vendor/qmk/qmk_firmware
+	cd vendor/qmk/qmk_firmware &&  make git-submodule
