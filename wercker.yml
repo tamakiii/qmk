@@ -10,6 +10,7 @@ build:
     - add-to-known_hosts:
       hostname: github.com
       fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
+
     - add-to-known_hosts:
       hostname: github.com
       fingerprint: SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8
@@ -39,4 +40,8 @@ deploy:
       name: upload hex file
       cwd: $WERCKER_OUTPUT_DIR
       code: |
-        ls *.hex | xargs -I @ make -C $WERCKER_SOURCE_DIR deploy FILE=@ PATH=${DROPBOX_DIR} TOKEN=${DROPBOX_TOKEN}
+        ls * | xargs -I @ curl -X POST https://content.dropboxapi.com/2/files/upload \
+          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
+          --header "Dropbox-API-Arg: {\"path\": \"${DROPBOX_DIR}/@\",\"mode\": \"add\",\"autorename\": false,\"mute\": false}" \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @$@
