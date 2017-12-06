@@ -32,8 +32,11 @@ build:
 
 deploy:
   steps:
+    - install-packages:
+      packages: curl
+
     - script:
       name: upload hex file
       cwd: $WERCKER_OUTPUT_DIR
-      code:
-        which curl && echo $DROPBOX_DIR && pwd && ls -lsa && for FILE in .; do echo ${FILE}; done
+      code: |
+         which curl && echo $DROPBOX_DIR && pwd && ls -lsa && for FILE in .; do echo ${FILE}; done
