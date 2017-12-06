@@ -38,7 +38,7 @@ deploy:
 
     - script:
       name: upload hex file
-      cwd: $WERCKER_OUTPUT_DIR
+      cwd: $WERCKER_SOURCE_DIR
       code: |
         ls * | xargs -I @ curl -X POST https://content.dropboxapi.com/2/files/upload \
           --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
