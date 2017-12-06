@@ -1,6 +1,6 @@
 
 setup:
-	git submodule update --init --recursive
+	# git submodule update --init --depth --recursive
 
 deploy:
 	curl -X POST https://content.dropboxapi.com/2/files/upload \
