@@ -21,13 +21,13 @@ build:
 
     - script:
       name: build keymap
-      cwd: $WERCKER_SOURCE_DIR/vendor/qmk/qmk_firmware
+      cwd: $WERCKER_ROOT/vendor/qmk/qmk_firmware
       code: |
         make keyboard=$KEYBOARD subproject=$SUBPROJECT keymap=$KEYMAP
 
     - script:
       name: move built firmware to output dir.
-      cwd: $WERCKER_SOURCE_DIR/vendor/qmk/qmk_firmware/.build
+      cwd: $WERCKER_ROOT/vendor/qmk/qmk_firmware/.build
       code: |
         cp *.hex $WERCKER_OUTPUT_DIR/
 
@@ -40,8 +40,4 @@ deploy:
       name: upload hex file
       cwd: $WERCKER_SOURCE_DIR
       code: |
-        ls * | xargs -I __FILE__ curl -X POST https://content.dropboxapi.com/2/files/upload \
-          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
-          --header "Dropbox-API-Arg: {\"path\": \"${DROPBOX_DIR}/__FILE__\",\"mode\": \"add\",\"autorename\": false,\"mute\": false}" \
-          --header "Content-Type: application/octet-stream" \
-          --data-binary @__FILE__
+        ls * | xargs -I @ make -C $WERCKER_ROOT deploy TOKEN=${DROPBOX_TOKEN} DIR=${DROPBOX_DIR} FILE=@
