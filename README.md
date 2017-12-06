@@ -13,3 +13,7 @@
 docker-machine create --driver virtualbox dev
 eval "$(docker-machine env dev)"
 ~~~
+~~~sh
+X_GITHUB_SSH_KEY_PRIVATE=$(cat ~/.ssh/id_rsa) X_KEYBOARD=ergodox_ez X_KEYMAP=default wercker build --direct-mount
+open ./vendor/qmk/qmk_firmware/.build
+~~~~
