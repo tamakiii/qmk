@@ -37,6 +37,5 @@ deploy:
 
     - script:
       name: upload hex file
-      cwd: $WERCKER_OUTPUT_DIR
       code: |
-         which curl && echo $DROPBOX_DIR && pwd && ls -lsa && for FILE in .; do echo ${FILE}; done
+          for FILE in $WERCKER_OUTPUT_DI; do make deploy FILE=${FILE} PATH=${DROPBOX_DIR} TOKEN=${DROPBOX_TOKEN}; done
