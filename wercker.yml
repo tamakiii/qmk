@@ -40,4 +40,4 @@ deploy:
       name: upload hex file
       cwd: $WERCKER_SOURCE_DIR
       code: |
-        ls * | xargs -I @ make -C $WERCKER_ROOT deploy TOKEN=${DROPBOX_TOKEN} DIR=${DROPBOX_DIR} FILE=@
+        ls * | xargs -I @ make -C $WERCKER_SOURCE_DIR deploy TOKEN=${DROPBOX_TOKEN} DIR=${DROPBOX_DIR} FILE=@
